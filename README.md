@@ -1,4 +1,4 @@
-# Many-Translaters
+# Many-Translaters（始于作者13岁）
 各式各样的翻译爬虫暂时只有三个：有道翻译，360翻译，iCIBA翻译，陆续还会更新。
 
 另外两个翻译就是post一下参数即可获得，极为方便。
