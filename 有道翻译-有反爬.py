@@ -105,5 +105,4 @@ if __name__ == '__main__':
     y = Youdao('你是我的小苹果，我是你的优乐美')
     y.get_result()
     
-    print(translate(y))
-    input()
+    print(translate('你是我的小苹果，我是你的优乐美'))
