@@ -10,7 +10,7 @@ class Youdao(object):
     def __init__(self, msg):
         self.msg = msg
         self.url = 'http://fanyi.youdao.com/translate_o?smartresult=dict&smartresult=rule'
-        self.D = "ebSeFb%=XZ%T[KZ)c(sy!"
+        self.D = "Ygy_4c=r#e#4EX^NUGUc5"
         self.salt = self.get_salt()
         self.sign = self.get_sign()
 
@@ -72,6 +72,38 @@ class Youdao(object):
                 pass
 
 
+def translate(msg):
+    """修改简化之后"""
+    url = "http://fanyi.youdao.com/translate_o?smartresult=dict&smartresult=rule"
+    youdao_salt = "Ygy_4c=r#e#4EX^NUGUc5"
+    time_salt = str(int(time.time() * 1000) + random.randint(0, 10))
+    sign_ori = "fanyideskweb" + msg + time_salt + youdao_salt
+    sign_hash = hashlib.md5(sign_ori.encode('utf-8')).hexdigest()
+    headers = {
+        'Cookie': 'OUTFOX_SEARCH_USER_ID=-2022895048@10.168.8.76;',
+        'Referer': 'http://fanyi.youdao.com/',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; rv:51.0) Gecko/20100101 Firefox/51.0',
+    }
+    data = {
+        'i': msg,
+        'from': 'AUTO',
+        'to': 'AUTO',
+        'smartresult': 'dict',
+        'client': 'fanyideskweb',
+        'salt': time_salt,
+        'sign': sign_hash,
+        'doctype': 'json',
+        'version': '3.0',
+        'keyfrom': 'fanyi.web',
+        'action': 'FY_BY_CLICKBUTTION',
+        'typoResult': 'true'
+    }
+    res_json = requests.post(url, data=data, headers=headers).json()
+    return res_json["translateResult"][0]
+
 if __name__ == '__main__':
     y = Youdao('你是我的小苹果，我是你的优乐美')
     y.get_result()
+    
+    print(translate(y))
+    input()
